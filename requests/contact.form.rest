@@ -1,0 +1,13 @@
+### Obtener todos los contactos
+GET http://localhost:3000/api/contact-form HTTP/1.1
+
+### Nuevo mensaje de contacto
+POST http://localhost:3000/api/contact-form
+Content-Type: application/json
+
+{
+    "name": "Uriel",
+    "lastName": "Pozo",
+    "mail": "uriel.vela@epn.edu.ec",
+    "message": "Hola, quiero saber más sobre el curso de NodeJS"
+}

@@ -1,0 +1,90 @@
+#REPLICACIÓN:
+services:
+  mysql-master1:
+    image: mysql:8.0
+    container_name: mysql-master1
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: formDB
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_MAX_ALLOWED_PACKET: 128M
+      MYSQL_WAIT_TIMEOUT: 28800
+    networks:
+      - mysql-network
+    ports:
+      - "3308:3306"
+    command: --server-id=1 --log-bin=mysql-bin --binlog-do-db=formDB --default-authentication-plugin=mysql_native_password
+
+  mysql-master2:
+    image: mysql:8.0
+    container_name: mysql-master2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: formDB
+    networks:
+      - mysql-network
+    command: --server-id=2 --log-bin=mysql-bin --binlog-do-db=formDB --default-authentication-plugin=mysql_native_password
+
+  phpmyadmin1:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin1
+    environment:
+      PMA_HOST: mysql-master1
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    networks:
+      - mysql-network
+    ports:
+      - "8081:80"
+
+  phpmyadmin2:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin2
+    environment:
+      PMA_HOST: mysql-master2
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    networks:
+      - mysql-network
+    ports:
+      - "8082:80"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-loadbalancer
+    environment:
+      NGINX_HOST: localhost
+      NGINX_PORT: 8080
+    depends_on:
+      - phpmyadmin1
+      - phpmyadmin2
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:80"
+    networks:
+      - mysql-network
+
+  # app:
+  #   build:
+  #     context: .. # Usa el contexto de la raíz del proyecto
+  #     dockerfile: Dockerfile # Usa el Dockerfile en la raíz
+  #   container_name: node-app
+  #   ports:
+  #     - "3000:3000" # Expone el puerto de tu aplicación Node.js
+  #   depends_on:
+  #     - mysql-master1 # Asegúrate de que MySQL esté en ejecución antes de iniciar la app
+  #   environment:
+  #     DB_HOST: mysql-master1 # Conéctate a mysql-master1  
+  #     DB_PORT: 3306
+  #     DB_USER: root
+  #     DB_PASSWORD: rootpassword
+  #     DB_NAME: formDB
+  #   networks:
+  #     - mysql-network
+
+networks:
+  mysql-network:
+    driver: bridge

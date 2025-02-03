@@ -1,0 +1,72 @@
+services:
+  servidor1:
+    build:
+      context: ./servidor1
+      dockerfile: Dockerfile
+    container_name: servidor1
+    ports:
+      - 5001:3001
+    environment:
+      - DB_HOST=mysql-master1
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=formDB
+    networks:
+      - default
+      - mysql-network
+
+  servidor2:
+    build:
+      context: ./servidor2
+      dockerfile: Dockerfile
+    container_name: servidor2
+    ports:
+      - 5002:3001
+    environment:
+      - DB_HOST=mysql-master1
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=formDB
+    networks:
+      - default
+      - mysql-network
+
+  servidor3:
+    build:
+      context: ./servidor3
+      dockerfile: Dockerfile
+    container_name: servidor3
+    ports:
+      - 5003:3001
+    environment:
+      - DB_HOST=mysql-master1
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=formDB
+    networks:
+      - default
+      - mysql-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - 8090:80
+    depends_on:
+      - servidor1
+      - servidor2
+      - servidor3
+    networks:
+      - default
+      - mysql-network
+
+networks:
+  default:
+    driver: bridge
+  mysql-network:
+    external: true
