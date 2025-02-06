@@ -6,8 +6,8 @@ POST http://localhost:8085/api/contact-form
 Content-Type: application/json
 
 {
-    "name": "Uriel",
-    "lastName": "Pozo",
-    "mail": "uriel.vela@epn.edu.ec",
-    "message": "Hola, quiero saber más sobre el curso de NodeJS"
+    "name": "David",
+    "lastName": "Vela",
+    "mail": "David.vela@epn.edu.ec",
+    "message": "Hola, me gustaria saber mas sobre el curso de Java"
 }
