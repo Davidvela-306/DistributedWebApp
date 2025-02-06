@@ -56,7 +56,7 @@ services:
       dockerfile: Dockerfile
     container_name: nginx
     ports:
-      - 8081:81
+      - 8085:81
     depends_on:
       - servidor1
       - servidor2

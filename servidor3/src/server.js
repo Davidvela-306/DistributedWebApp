@@ -19,7 +19,7 @@ initDB()
     app.use("/api", contactRoutes);
 
     // Ruta raíz
-    app.get("/", (req, res) => res.send("Hello World!"));
+    app.get("/", (req, res) => res.send("Hello World desde el servidor 3!"));
 
     // Middleware 404
     app.use((req, res) => {
