@@ -67,23 +67,6 @@ services:
     networks:
       - mysql-network
 
-  # app:
-  #   build:
-  #     context: .. # Usa el contexto de la raíz del proyecto
-  #     dockerfile: Dockerfile # Usa el Dockerfile en la raíz
-  #   container_name: node-app
-  #   ports:
-  #     - "3000:3000" # Expone el puerto de tu aplicación Node.js
-  #   depends_on:
-  #     - mysql-master1 # Asegúrate de que MySQL esté en ejecución antes de iniciar la app
-  #   environment:
-  #     DB_HOST: mysql-master1 # Conéctate a mysql-master1  
-  #     DB_PORT: 3306
-  #     DB_USER: root
-  #     DB_PASSWORD: rootpassword
-  #     DB_NAME: formDB
-  #   networks:
-  #     - mysql-network
 
 networks:
   mysql-network:

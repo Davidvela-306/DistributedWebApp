@@ -2,7 +2,7 @@
 FROM node:18
 
 # Establece el directorio de trabajo
-WORKDIR /app
+WORKDIR /servidor2
 
 # Copia el package.json y package-lock.json
 COPY package*.json ./

@@ -14,7 +14,7 @@ services:
       - DB_NAME=formDB
     networks:
       - default
-      - mysql-network
+      - db_mysql-network
 
   servidor2:
     build:
@@ -31,7 +31,7 @@ services:
       - DB_NAME=formDB
     networks:
       - default
-      - mysql-network
+      - db_mysql-network
 
   servidor3:
     build:
@@ -48,7 +48,7 @@ services:
       - DB_NAME=formDB
     networks:
       - default
-      - mysql-network
+      - db_mysql-network
 
   nginx:
     build:
@@ -56,17 +56,17 @@ services:
       dockerfile: Dockerfile
     container_name: nginx
     ports:
-      - 8090:80
+      - 8081:81
     depends_on:
       - servidor1
       - servidor2
       - servidor3
     networks:
       - default
-      - mysql-network
+      - db_mysql-network
 
 networks:
   default:
     driver: bridge
-  mysql-network:
+  db_mysql-network:
     external: true

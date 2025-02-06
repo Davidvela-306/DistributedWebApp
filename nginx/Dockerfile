@@ -5,4 +5,4 @@ FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expone el puerto
-EXPOSE 80
+EXPOSE 81
